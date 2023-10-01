@@ -5,6 +5,7 @@ import { MenuItemCard } from '.';
 import { useGetMenuItemsQuery } from '../../../../Apis/menuItemApi';
 import { useDispatch } from 'react-redux';
 import { setMenuItem } from '../../../../Storage/Redux/menuItemSlice';
+import { MainLoader } from '../Common';
 
 
 function MenuItemList() {
@@ -22,9 +23,12 @@ function MenuItemList() {
 
   if(isLoading){
     return(
-      <div>
-        Loading
-      </div>
+      <div
+          className="d-flex justify-content-center"
+          style={{ width: "100%" }}
+        >
+          <MainLoader/>
+        </div>
     );
   }
 

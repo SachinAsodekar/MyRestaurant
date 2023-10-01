@@ -1,12 +1,32 @@
 import React from 'react'
 import { menuItemModel } from '../../../../Interfaces'
 import { Link } from 'react-router-dom'
+import { useState } from "react";
+import { useUpdateShoppingCartMutation } from '../../../../Apis/shoppingCartApi';
+import { MiniLoader } from '../Common';
 
 interface Props{
   menuItem: menuItemModel
 }
 
 function MenuItemCart(props:Props) {
+
+  const [isAddingToCart, setIsAddingToCart] = useState<boolean>(false);
+  const [updateShoppingCart] = useUpdateShoppingCartMutation();
+
+  const handleAddToCart = async (menuItemId:number)=>{
+    setIsAddingToCart(true);
+
+    const response = await updateShoppingCart({
+      menuItemId:menuItemId,
+      updateQuantityBy: 1,
+      userId: "8a0903be-e931-4c40-9c7c-b42d83d125a3",
+    });
+
+    setIsAddingToCart(false);
+  }
+
+
   return (
     <div className="col-md-4 col-12 p-4">
       <div
@@ -41,19 +61,32 @@ function MenuItemCart(props:Props) {
           </i>
         )}
           
+          {isAddingToCart?(
+             <div
+             style={{
+               position: "absolute",
+               top: "15px",
+               right: "15px",
+             }}
+           >
+            <MiniLoader/>
+           </div>
+          ):(
+            <i
+              className="bi bi-cart-plus btn btn-outline-danger"
+              onClick={()=>handleAddToCart(props.menuItem.id)}
+              style={{
+                position: "absolute",
+                top: "15px",
+                right: "15px",
+                padding: "5px 10px",
+                borderRadius: "3px",
+                outline: "none !important",
+                cursor: "pointer",
+              }}
+            ></i>)}
 
-          <i
-            className="bi bi-cart-plus btn btn-outline-danger"
-            style={{
-              position: "absolute",
-              top: "15px",
-              right: "15px",
-              padding: "5px 10px",
-              borderRadius: "3px",
-              outline: "none !important",
-              cursor: "pointer",
-            }}
-          ></i>
+          
 
           <div className="text-center">
             <p className="card-title m-0 text-success fs-3">
