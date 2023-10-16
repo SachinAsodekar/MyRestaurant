@@ -1,6 +1,6 @@
 
-# My Restaurant
-Under Construction 🏗👩‍💻
+# My Restaurant 🏗👩‍💻
+Under Construction 
 
 
 # Getting Started with Create React App
